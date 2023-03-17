@@ -17,7 +17,7 @@ struct gpt_params {
     // hyperthreading does actually work here
     // a 2-core CPU is faster with 4 threads
     int32_t n_threads = std::min(4, (int32_t) std::thread::hardware_concurrency());
-    int32_t n_predict = 128; // new tokens to predict
+    int32_t n_predict = 1000; // new tokens to predict
     int32_t repeat_last_n = 64;  // last n tokens to penalize
     // https://github.com/facebookresearch/llama/issues/148
     // It was trained with 2048 tokens, so you can use up to that.

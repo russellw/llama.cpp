@@ -985,7 +985,7 @@ int main(int argc, char ** argv) {
     // that doesn't put any extra bytes into the output
     // so that the output can be used as input to other processes
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_INTENSITY);
+    SetConsoleTextAttribute(hConsole, FOREGROUND_RED|FOREGROUND_GREEN);
 
     while (remaining_tokens > 0) {
         // predict
@@ -1005,7 +1005,7 @@ int main(int argc, char ** argv) {
 
         if (embd_inp.size() <= input_consumed) {
             // out of user input, sample next token
-		    SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN|FOREGROUND_INTENSITY);
+		    SetConsoleTextAttribute(hConsole, FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_INTENSITY);
             const float top_k = params.top_k;
             const float top_p = params.top_p;
             const float temp  = params.temp;
