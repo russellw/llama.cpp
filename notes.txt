@@ -1,0 +1,30 @@
+performance data points
+
+65/13 = 5
+65/7 ~= 9.3
+
+on my Intel® Pentium® Dual Core G5400 (3.70GHz) 4MB Cache
+7B (f16) <1/3 tokens per second
+13B (f16) ~1/6 tokens per second
+
+https://news.ycombinator.com/item?id=35110500
+On my M1 Ultra LlaMA 65B generates ~3 tokens per second (using 16 threads).
+
+https://news.ycombinator.com/item?id=35107257
+LLaMA 65B can do ~2 tokens per second on my M1 Max / 64 gb ram
+
+https://www.nextplatform.com/2023/02/28/move-over-chatgpt-meta-platforms-llama-makes-some-drama/
+Meta Platforms tested the largest LLaMA-65.2B model on 2,048 of Nvidia’s “Ampere” A100 GPU accelerators with 80 GB of HBM2e memory using those 1.4 trillion tokens, and it took 21 days (at a rate of 380 tokens per second per GPU) to train the model.
+
+https://github.com/facebookresearch/llama/issues/150
+I am able to run on windows 11 with a 3060. You check out my repo https://github.com/public-git-ui/st-llama. You can ignore the web UI bits. On my machine, it's really slow, 3 tokens per second after warm up.
+
+https://brianlovin.com/hn/35100086
+A quick survey of the thread seems to indicate the 7b parameter LLaMA model does about 20 tokens per second (~4 words per second) on a base model M1 Pro, by taking advantage of Apple Silicon’s Neural Engine.
+
+https://gigazine.net/gsc_news/en/20230313-llama-on-m1-mac/
+Mr. Gerganov reports that LLaMA's 13B (13 billion parameters) model can be operated on a Mac with M1 at a processing speed of 10 tokens per second.
+
+https://boards.4channel.org/g/thread/92071746/llamacpp-thread-v3
+3060 can easily get 10 tokens per second with 13B
+even I get like 11 tokens per second on a fucking 3700X main: predict time = 47242.52 ms / 92.45 ms per token
