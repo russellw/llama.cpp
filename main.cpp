@@ -795,7 +795,7 @@ int main(int argc, char ** argv) {
     const int64_t t_main_start_us = ggml_time_us();
 
     gpt_params params;
-    params.model = "models/llama-7B/ggml-model.bin";
+    params.model = "models/13B/ggml-model-f16.bin";
 
     if (gpt_params_parse(argc, argv, params) == false) {
         return 1;
@@ -823,7 +823,7 @@ int main(int argc, char ** argv) {
     // load the model
     {
         const int64_t t_start_us = ggml_time_us();
-        if (!llama_model_load(params.model, model, vocab, params.n_ctx)) {  
+        if (!llama_model_load(params.model, model, vocab, params.n_ctx)) {
             fprintf(stderr, "%s: failed to load model from '%s'\n", __func__, params.model.c_str());
             return 1;
         }
