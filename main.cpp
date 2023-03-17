@@ -58,6 +58,7 @@ void printItem1(size_t n, const char *caption) {
 #define printItem(x) printItem1(pmc.x, #x)
 
 void printMem() {
+	putchar('\n');
   PROCESS_MEMORY_COUNTERS_EX pmc;
   GetProcessMemoryInfo(GetCurrentProcess(), (PPROCESS_MEMORY_COUNTERS)&pmc,
                        sizeof pmc);
@@ -1128,7 +1129,6 @@ int main(int argc, char ** argv) {
         fprintf(stderr, "%s:    total time = %8.3f s\n", __func__, (t_main_end_us - t_main_start_us)/1e6);
     }
 
-	putchar('\n');
     //printMem();
 
     ggml_free(model.ctx);
