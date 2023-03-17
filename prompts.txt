@@ -1,0 +1,9 @@
+17/03/2023 10:36:39
+# Davis-Putnam-Logemann-Loveland
+def dpll(clauses):
+
+17/03/2023 10:36:42
+assert f(0)==5
+assert f(1)==6
+assert f(2)==7
+def f(x):
