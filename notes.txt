@@ -28,3 +28,9 @@ Mr. Gerganov reports that LLaMA's 13B (13 billion parameters) model can be opera
 https://boards.4channel.org/g/thread/92071746/llamacpp-thread-v3
 3060 can easily get 10 tokens per second with 13B
 even I get like 11 tokens per second on a fucking 3700X main: predict time = 47242.52 ms / 92.45 ms per token
+
+17/03/2023 12:05:54
+https://news.ycombinator.com/item?id=35184985
+I ran it on a 128 RAM machine with a Ryzen 5950X. It's not fast, 4 seconds per token. But it's just about fits without swapping. https://github.com/Noeda/rllama/
+30B fp16 takes ~500 ms/token on M2 Max 96GB. Interestingly, that's the same performance as 65B q4 quantized.
+65B fp16 is ungodly slow, ~300,000 ms/token on the same machine.

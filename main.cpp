@@ -979,6 +979,12 @@ int main(int argc, char ** argv) {
     if (params.use_color) {
         printf(ANSI_COLOR_YELLOW);
     }
+    // ANSI color doesn't work on my machine
+    // but in any case, it is preferable to use a technique
+    // that doesn't put any extra bytes into the output
+    // so that the output can be used as input to other processes
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_INTENSITY);
 
     while (remaining_tokens > 0) {
         // predict
@@ -998,6 +1004,7 @@ int main(int argc, char ** argv) {
 
         if (embd_inp.size() <= input_consumed) {
             // out of user input, sample next token
+		    SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN|FOREGROUND_INTENSITY);
             const float top_k = params.top_k;
             const float top_p = params.top_p;
             const float temp  = params.temp;
@@ -1108,6 +1115,7 @@ int main(int argc, char ** argv) {
     signal(SIGINT, SIG_DFL);
 #endif
 
+    SetConsoleTextAttribute(hConsole, FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE|FOREGROUND_INTENSITY);
     // report timing
     {
         const int64_t t_main_end_us = ggml_time_us();
@@ -1121,7 +1129,7 @@ int main(int argc, char ** argv) {
     }
 
 	putchar('\n');
-    printMem();
+    //printMem();
 
     ggml_free(model.ctx);
 
