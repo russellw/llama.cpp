@@ -16,6 +16,7 @@
 #include <unistd.h>
 #elif defined (_WIN32)
 #include <signal.h>
+#include <windows.h>
 #endif
 
 #define ANSI_COLOR_RED     "\x1b[31m"
@@ -791,6 +792,9 @@ const char * llama_print_system_info(void) {
 }
 
 int main(int argc, char ** argv) {
+#if defined (_WIN32)
+    SetPriorityClass(GetCurrentProcess(), IDLE_PRIORITY_CLASS);
+#endif
     ggml_time_init();
     const int64_t t_main_start_us = ggml_time_us();
 
@@ -848,7 +852,7 @@ int main(int argc, char ** argv) {
     // tokenize the prompt
     std::vector<gpt_vocab::id> embd_inp = ::llama_tokenize(vocab, params.prompt, true);
 
-    params.n_predict = std::min(params.n_predict, model.hparams.n_ctx - (int) embd_inp.size());
+    params.n_predict = min(params.n_predict, model.hparams.n_ctx - (int) embd_inp.size());
 
     // tokenize the reverse prompt
     std::vector<gpt_vocab::id> antiprompt_inp = ::llama_tokenize(vocab, params.antiprompt, false);
