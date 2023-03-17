@@ -18,6 +18,8 @@
 #elif defined (_WIN32)
 #include <signal.h>
 #include <windows.h>
+// windows.h must be first
+#include <psapi.h>
 #endif
 
 #define ANSI_COLOR_RED     "\x1b[31m"
@@ -28,6 +30,48 @@
 #define ANSI_COLOR_CYAN    "\x1b[36m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 #define ANSI_BOLD          "\x1b[1m"
+
+void printItem1(size_t n, const char *caption) {
+	char buf[256];
+  auto s = buf + sizeof buf - 1;
+  *s = 0;
+  size_t i = 0;
+  do {
+    // extract a digit
+    *--s = '0' + n % 10;
+    n /= 10;
+
+    // track how many digits we have extracted
+    ++i;
+
+    // so that we can punctuate them in groups of 3
+    if (i % 3 == 0 && n)
+      *--s = ',';
+  } while (n);
+  size_t used = buf + sizeof buf - s;
+  size_t spaces = 15 - used;
+  for (i = 0; i < spaces; ++i)
+    putchar(' ');
+  printf("%s  %s\n", s, caption);
+}
+
+#define printItem(x) printItem1(pmc.x, #x)
+
+void printMem() {
+  PROCESS_MEMORY_COUNTERS_EX pmc;
+  GetProcessMemoryInfo(GetCurrentProcess(), (PPROCESS_MEMORY_COUNTERS)&pmc,
+                       sizeof pmc);
+  printItem(PageFaultCount);
+  printItem(PeakWorkingSetSize);
+  printItem(WorkingSetSize);
+  printItem(QuotaPeakPagedPoolUsage);
+  printItem(QuotaPagedPoolUsage);
+  printItem(QuotaPeakNonPagedPoolUsage);
+  printItem(QuotaNonPagedPoolUsage);
+  printItem(PagefileUsage);
+  printItem(PeakPagefileUsage);
+  printItem(PrivateUsage);
+}
 
 // determine number of model parts based on the dimension
 static const std::map<int, int> LLAMA_N_PARTS = {
@@ -1071,6 +1115,9 @@ int main(int argc, char ** argv) {
         fprintf(stderr, "%s:  predict time = %8.3f s / %.3f s per token\n", __func__, t_predict_us/1e6, t_predict_us/1e6/n_past);
         fprintf(stderr, "%s:    total time = %8.3f s\n", __func__, (t_main_end_us - t_main_start_us)/1e6);
     }
+
+	putchar('\n');
+    printMem();
 
     ggml_free(model.ctx);
 
