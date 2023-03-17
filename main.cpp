@@ -8,6 +8,7 @@
 #include <cstring>
 #include <fstream>
 #include <map>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -813,7 +814,15 @@ int main(int argc, char ** argv) {
 
     std::mt19937 rng(params.seed);
     if (params.prompt.empty()) {
-        params.prompt = gpt_random_prompt(rng);
+        // https://stackoverflow.com/questions/2602013/read-whole-ascii-file-into-c-stdstring
+        std::ifstream t("prompt.txt");
+        if (!t) {
+            perror("prompt.txt");
+            return 1;
+        }
+        std::stringstream buffer;
+        buffer << t.rdbuf();
+        params.prompt = buffer.str();
     }
 
 //    params.prompt = R"(// this function checks if the number n is prime
