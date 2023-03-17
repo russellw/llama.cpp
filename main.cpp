@@ -574,6 +574,10 @@ bool llama_model_load(const std::string & fname, llama_model & model, gpt_vocab 
 //   - embd_w:    the predicted logits for the next token
 //
 // The GPT-J model requires about 16MB of memory per input token.
+// 17/03/2023 11:45:05
+// the above does not actually seem to be the case?
+// I tried throwing a lot more input tokens at it
+// and memory usage did not seem to increase much
 //
 bool llama_eval(
         const llama_model & model,
