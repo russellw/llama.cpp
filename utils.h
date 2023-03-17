@@ -19,6 +19,9 @@ struct gpt_params {
     int32_t n_threads = std::min(4, (int32_t) std::thread::hardware_concurrency());
     int32_t n_predict = 128; // new tokens to predict
     int32_t repeat_last_n = 64;  // last n tokens to penalize
+    // https://github.com/facebookresearch/llama/issues/148
+    // It was trained with 2048 tokens, so you can use up to that.
+    // If you want to use more tokens, you will need to fine-tune the model so that it supports longer sequences.
     int32_t n_ctx = 512; //context size
 
     // sampling parameters
