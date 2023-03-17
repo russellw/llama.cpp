@@ -222,7 +222,7 @@ bool llama_model_load(const std::string & fname, llama_model & model, gpt_vocab 
 
         ctx_size += (5 + 10*n_layer)*256; // object overhead
 
-        fprintf(stderr, "%s: ggml ctx size = %6.2f MB\n", __func__, ctx_size/(1024.0*1024.0));
+        fprintf(stderr, "%s: ggml ctx size = %6.3f MB\n", __func__, ctx_size/(1024.0*1024.0));
     }
 
     // create the ggml context
@@ -309,7 +309,7 @@ bool llama_model_load(const std::string & fname, llama_model & model, gpt_vocab 
 
         const size_t memory_size = ggml_nbytes(model.memory_k) + ggml_nbytes(model.memory_v);
 
-        fprintf(stderr, "%s: memory_size = %8.2f MB, n_mem = %d\n", __func__, memory_size/1024.0/1024.0, n_mem);
+        fprintf(stderr, "%s: memory_size = %8.3f MB, n_mem = %d\n", __func__, memory_size/1024.0/1024.0, n_mem);
     }
 
     const size_t file_offset = fin.tellg();
@@ -501,7 +501,7 @@ bool llama_model_load(const std::string & fname, llama_model & model, gpt_vocab 
                     total_size += ggml_nbytes(tensor)/n_parts;
                 }
 
-                //fprintf(stderr, "%42s - [%5d, %5d], type = %6s, %6.2f MB\n", name.data(), ne[0], ne[1], ftype == 0 ? "float" : "f16", ggml_nbytes(tensor)/1024.0/1024.0);
+                //fprintf(stderr, "%42s - [%5d, %5d], type = %6s, %6.3f MB\n", name.data(), ne[0], ne[1], ftype == 0 ? "float" : "f16", ggml_nbytes(tensor)/1024.0/1024.0);
                 if (++n_tensors % 8 == 0) {
                     fprintf(stderr, ".");
                     fflush(stderr);
@@ -510,7 +510,7 @@ bool llama_model_load(const std::string & fname, llama_model & model, gpt_vocab 
 
             fprintf(stderr, " done\n");
 
-            fprintf(stderr, "%s: model size = %8.2f MB / num tensors = %d\n", __func__, total_size/1024.0/1024.0, n_tensors);
+            fprintf(stderr, "%s: model size = %8.3f MB / num tensors = %d\n", __func__, total_size/1024.0/1024.0, n_tensors);
         }
 
         fin.close();
@@ -1053,10 +1053,10 @@ int main(int argc, char ** argv) {
 
         fprintf(stderr, "\n\n");
         fprintf(stderr, "%s: mem per token = %8zu bytes\n", __func__, mem_per_token);
-        fprintf(stderr, "%s:     load time = %8.2f ms\n", __func__, t_load_us/1000.0f);
-        fprintf(stderr, "%s:   sample time = %8.2f ms\n", __func__, t_sample_us/1000.0f);
-        fprintf(stderr, "%s:  predict time = %8.2f ms / %.2f ms per token\n", __func__, t_predict_us/1000.0f, t_predict_us/1000.0f/n_past);
-        fprintf(stderr, "%s:    total time = %8.2f ms\n", __func__, (t_main_end_us - t_main_start_us)/1000.0f);
+        fprintf(stderr, "%s:     load time = %8.3f s\n", __func__, t_load_us/1e6);
+        fprintf(stderr, "%s:   sample time = %8.3f s\n", __func__, t_sample_us/1e6);
+        fprintf(stderr, "%s:  predict time = %8.3f s / %.3f s per token\n", __func__, t_predict_us/1e6, t_predict_us/1e6/n_past);
+        fprintf(stderr, "%s:    total time = %8.3f s\n", __func__, (t_main_end_us - t_main_start_us)/1e6);
     }
 
     ggml_free(model.ctx);
