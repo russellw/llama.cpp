@@ -25,8 +25,12 @@ struct gpt_params {
     int32_t n_ctx = 2048; //context size
 
     // sampling parameters
+
     int32_t top_k = 40;
     float   top_p = 0.95f;
+
+    //you might think turning temperature down would produce logical but predictable output
+    //but in one experiment so far, turning it to zero, simply produced random garbage
     float   temp  = 0.80f;
     float   repeat_penalty  = 1.30f;
 

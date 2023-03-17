@@ -19,3 +19,8 @@ https://news.ycombinator.com/item?id=35184985
 Here is a short, clear, well written example of a program that lists the first 10 numbers of the fibonacci sequence, written in javascript:
 
 ```js
+
+17/03/2023 18:35:26
+# Here is an implementation of Colossal Cave Adventure by Crowther and Woods, in Python
+
+def
