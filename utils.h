@@ -22,7 +22,7 @@ struct gpt_params {
     // https://github.com/facebookresearch/llama/issues/148
     // It was trained with 2048 tokens, so you can use up to that.
     // If you want to use more tokens, you will need to fine-tune the model so that it supports longer sequences.
-    int32_t n_ctx = 512; //context size
+    int32_t n_ctx = 2048; //context size
 
     // sampling parameters
     int32_t top_k = 40;
